@@ -1,0 +1,9 @@
+select distinct R.Name0,R.User_Name0,a.AssignmentName 'Deployment Name',sn.StateName 'Enforcement Status',R.AD_Site_Name0 ,Build01
+from v_ciassignment a
+Full outer join v_AssignmentState_Combined assc on assc.AssignmentID = a.AssignmentID
+Full outer join v_StateNames sn on sn.TopicType = assc.StateType and sn.StateID=ISNULL (assc.StateID,0)
+Full outer join v_r_system R on R.ResourceID = assc.ResourceID
+Full outer join v_FullCollectionMembership fcm on fcm.ResourceID = R.ResourceID
+Full outer join v_AuthListInfo AI on AI.Description = A.Description
+where a.AssignmentName in ('Workstations Monthly Patching Windows 10 1903 Above 2023-06-Ring 4 - Special') and assc.StateType in (300,301)
+and fcm.collectionID = 'P0100F54'
